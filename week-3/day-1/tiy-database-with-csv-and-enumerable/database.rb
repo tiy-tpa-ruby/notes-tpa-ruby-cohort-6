@@ -1,3 +1,5 @@
+require 'csv'
+
 class Person
   attr_accessor :name, :phone_number, :address, :position, :salary, :slack_account, :github_account
 end
@@ -5,6 +7,35 @@ end
 class Database
   def initialize
     @people = []
+
+    # call the method `load_people`
+    load_people
+  end
+
+  def load_people
+    CSV.foreach("employees.csv", headers: true) do |current_line_of_csv|
+      person = Person.new
+
+      person.name           = current_line_of_csv["name"]
+      person.phone_number   = current_line_of_csv["phone"]
+      person.position       = current_line_of_csv["position"]
+      person.salary         = current_line_of_csv["salary"]
+      person.slack_account  = current_line_of_csv["slack"]
+      person.github_account = current_line_of_csv["github"]
+
+      @people << person
+    end
+  end
+
+  def save_people
+    csv = CSV.open("employees.csv", "w")
+    csv.add_row %w(name phone address position salary slack github)
+
+    @people.each do |person|
+      csv.add_row [person.name, person.phone_number, person.address, person.position, person.salary, person.slack_account, person.github_account]
+    end
+
+    csv.close
   end
 
   def add_person
@@ -38,6 +69,7 @@ class Database
       person.github_account = gets.chomp
 
       @people << person
+      save_people
     end
   end
 
@@ -50,8 +82,7 @@ class Database
       puts "Didn't find anyone"
     else
       matching_people.each do |person|
-        puts "Name:      #{person.name}"
-        puts "Salary:    #{person.salary}"
+        print_person(person)
       end
     end
   end
@@ -65,8 +96,26 @@ class Database
 
     if @people.length != inital_count
       puts "I deleted #{search_name} from the database"
+      save_people
     else
       puts "Sorry, that person isn't there"
+    end
+  end
+
+  def print_person(person)
+    puts "Name:      #{person.name}"
+    puts "Salary:    #{person.salary}"
+    puts "Address:   #{person.address}"
+    puts "Position:  #{person.position}"
+    puts "Phone:     #{person.phone_number}"
+    puts "Slack:     #{person.slack_account}"
+    puts "Github:    #{person.github_account}"
+    puts
+  end
+
+  def print_report
+    @people.each do |person|
+      print_person(person)
     end
   end
 
@@ -77,6 +126,7 @@ class Database
       puts "(A)dd a person"
       puts "(S)earch for a person"
       puts "(D)elete a person"
+      puts "(R)eport"
       puts
       puts "Action: "
       answer = gets.chomp
@@ -88,6 +138,8 @@ class Database
         search_person
       when "D"
         delete_person
+      when "R"
+        print_report
       else
         puts "Unknown option"
       end
