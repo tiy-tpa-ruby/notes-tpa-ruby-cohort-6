@@ -1,4 +1,5 @@
 require 'csv'
+require 'terminal-table'
 
 class Person
   attr_accessor :name, :phone_number, :address, :position, :salary, :slack_account, :github_account
@@ -115,39 +116,13 @@ class Database
   end
 
   def print_report
-    # ------------------------------------------------------------------------------------------------
-    # | name  | phone    | address         | position        | salary  | slack        | github       |
-    # ------------------------------------------------------------------------------------------------
-    # | Gavin | 555-1212 | 1 Main Street   | Instructor      | 1000000 | gstark       | gstark       |
-    # | Jason | 555-4242 | 500 Elm Street  | Instructor      | 2000000 | ambethia     | ambethia     |
-    # | Toni  | 555-4444 | 200 Pine Street | Campus Director | 3000000 | amazing_toni | amazing_toni |
-    # ------------------------------------------------------------------------------------------------
+    table = Terminal::Table.new :headings => %w{name phone address position salary slack github}
 
-    longest_name_length     = ["name".length,     @people.map { |person| person.name.length }.max].max
-    longest_phone_length    = ["phone".length,    @people.map { |person| person.phone_number.length }.max].max
-    longest_address_length  = ["address".length,  @people.map { |person| person.address.length }.max].max
-    longest_position_length = ["position".length, @people.map { |person| person.position.length }.max].max
-    longest_salary_length   = ["salary".length,   @people.map { |person| person.salary.length }.max].max
-    longest_slack_length    = ["slack".length,    @people.map { |person| person.slack_account.length }.max].max
-    longest_github_length   = ["github".length,   @people.map { |person| person.github_account.length }.max].max
-
-    length_of_separator = (longest_name_length +
-               longest_phone_length +
-               longest_slack_length +
-               longest_salary_length +
-               longest_github_length +
-               longest_address_length +
-               longest_position_length +
-               7 * 3 +
-               1)
-
-    puts "-" * length_of_separator
-    puts "| #{"name".ljust(longest_name_length)} | #{"phone".ljust(longest_phone_length)} | #{"address".ljust(longest_address_length)} | #{"position".ljust(longest_position_length)} | #{"salary".ljust(longest_salary_length)} | #{"slack".ljust(longest_slack_length)} | #{"github".ljust(longest_github_length)} |"
-    puts "-" * length_of_separator
     @people.each do |person|
-      puts "| #{person.name.ljust(longest_name_length)} | #{person.phone_number.ljust(longest_phone_length)} | #{person.address.ljust(longest_address_length)} | #{person.position.ljust(longest_position_length)} | #{person.salary.ljust(longest_salary_length)} | #{person.slack_account.ljust(longest_slack_length)} | #{person.github_account.ljust(longest_github_length)} |"
+      table.add_row [person.name, person.phone_number, person.address, person.position, person.salary, person.slack_account, person.github_account]
     end
-    puts "-" * length_of_separator
+
+    puts table
   end
 
   def show_menu
