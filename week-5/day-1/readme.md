@@ -1,0 +1,8 @@
+- Reviewed weekend lab homework
+  - Implemented edit/update/search/delete
+- Extracted SQL queries into an `Employee` class
+  - `self.all`
+  - `self.find`
+  - `save`
+  - `delete`
+- Introduced `activerecord`
