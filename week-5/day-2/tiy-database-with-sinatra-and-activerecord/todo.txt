@@ -1,0 +1,21 @@
+- X landing page
+  - X some descriptive text
+- X Nav bar
+- X Employees link (to an employees URL)
+- X employee URL (second page)
+  - X table
+    - name
+    - address
+    - position
+    - salary
+    - slack
+    - github
+    - phone
+    - Link to show
+
+x On the employee *index* URL there should be a link to take the user to a *new* employee URL
+x This page should show a form to fill in the details of an employee
+x On the employee *index* URL there should be a _search_ form that allows you to type in some text and click a *search* button
+- When showing a player use a nice format for showing all of the user's information.
+- Maybe use a `list-group` or other bootstrap component to format the data
+- When clicking the _submit_ button for this form, a new employee should be created
