@@ -1,0 +1,30 @@
+= render "index_header"
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Name
+        %th Description
+        %th Mascot
+        %th Sport
+        %th Image url
+        %th{colspan: 3}
+
+    %tbody
+      - @teams.each do |team|
+        %tr
+          %td= team.name
+          %td= team.description
+          %td= team.mascot
+          %td= team.sport
+          %td= team.image_url
+          %td
+            = link_to team do
+              %span.glyphicon.glyphicon-ok
+          %td
+            = link_to edit_team_path(team) do
+              %span.glyphicon.glyphicon-pencil
+          %td
+            = link_to team, data: { confirm: 'Are you sure?' }, method: :delete do
+              %span.glyphicon.glyphicon-remove
