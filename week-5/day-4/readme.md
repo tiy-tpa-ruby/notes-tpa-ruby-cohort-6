@@ -36,10 +36,14 @@ Core concepts:
   - Leverage many rails helpers.
   - `form_for(@team)` knows if this is creating a team, or updating a team.
     - How does it know? There is a `persisted?` method that tells us if this is saved or not
-  -
 
-- HAML
+- `HAML`
   - Alternative to ERB, achieves the same goal (generating HTML) but reduces syntax overhead
+  - [Core Principles](http://haml.info/about.html)
+    - Markup Should be Beautiful
+    - Markup Should be DRY
+    - Markup Should be Well-Indented
+    - HTML Structure Should be Clear
   - *HIGHLY* indentation dependent, indentation is _everything_ in HAML as it determines when tags end.
   - Also see `slim` if `haml` is _too much syntax_ for you. :grin:
   - [Documentation](http://haml.info)
